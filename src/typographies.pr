@@ -1,0 +1,32 @@
+{*
+
+Generate all shadow tokens as named variables.
+Tokens are named by their group path and then name, 
+and their value rendered using `shadow-color` blueprint
+
+*}
+{[ global CURRENT_TYPE = "Typography" /]}
+
+{[ const measureBehavior = getBehavior("measure") /]}
+{[ const behavior = getBehavior(CURRENT_TYPE) /]}
+
+{[ let brand = ds.currentBrand() /]}
+{[ const group = ds.tokenGroupTreeByType(CURRENT_TYPE, brand.id) /]}
+
+import { {{ measureBehavior.varName }}, {{ measureBehavior.itemTypeName }} } from './{{ measureBehavior.fileName }}';
+
+export type {{ behavior.itemTypeName }} = {
+  fontFamily: string;
+  fontStyle: string;
+  fontWeight: number;
+  fontSize: MeasureTokenType;
+  lineHeight?: MeasureTokenType;
+  letterSpacing: MeasureTokenType,
+  textIndent: MeasureTokenType,
+};
+
+export type {{ behavior.typeName }} = {[ inject "rendered-group-type" context group /]};
+
+export type Custom{{ behavior.typeName }} = {[ inject "rendered-group-custom-type" context group /]};
+
+export const {{ behavior.varName }}: {{ behavior.typeName }} = {[ inject "rendered-group-content" context group /]};

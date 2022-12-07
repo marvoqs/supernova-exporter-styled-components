@@ -1,0 +1,21 @@
+{*
+
+Generate all color tokens as named variables.
+Tokens are named by their group path and then name, 
+and their value rendered using `rendered-color` blueprint
+
+*}
+{[ global CURRENT_TYPE = "Color" /]}
+
+{[ const behavior = getBehavior(CURRENT_TYPE) /]}
+
+{[ let brand = ds.currentBrand() /]}
+{[ const group = ds.tokenGroupTreeByType(CURRENT_TYPE, brand.id) /]}
+
+export type {{ behavior.itemTypeName }} = string;
+
+export type {{ behavior.typeName }} = {[ inject "rendered-group-type" context group /]};
+
+export type Custom{{ behavior.typeName }} = {[ inject "rendered-group-custom-type" context group /]};
+
+export const {{ behavior.varName }}: {{ behavior.typeName }} = {[ inject "rendered-group-content" context group /]};

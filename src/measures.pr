@@ -1,0 +1,19 @@
+{[ global CURRENT_TYPE = "Measure" /]}
+
+{[ const behavior = getBehavior(CURRENT_TYPE) /]}
+
+{[ let brand = ds.currentBrand() /]}
+{[ const group = ds.tokenGroupTreeByType(CURRENT_TYPE, brand.id) /]}
+
+export interface {{ behavior.itemTypeName }} {
+  css: string;
+  value: number;
+  origin: string;
+  originValue: number;
+}
+
+export type {{ behavior.typeName }} = {[ inject "rendered-group-type" context group /]};
+
+export type Custom{{ behavior.typeName }} = {[ inject "rendered-group-custom-type" context group /]};
+
+export const {{ behavior.varName }}: {{ behavior.typeName }} = {[ inject "rendered-group-content" context group /]};

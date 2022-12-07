@@ -1,0 +1,27 @@
+{[ const types = ["color","border","gradient","measure","shadow","radius","typography"] /]}
+
+{[ for type in types ]}
+{[ const behavior = getBehavior(type) /]}
+import { {{ behavior.varName }}, {{ behavior.typeName }}, Custom{{ behavior.typeName }} } from './{{ behavior.fileName }}';
+{[/]}
+
+export interface ThemeType {
+    {[ for type in types ]}
+    {[ const behavior = getBehavior(type) /]}
+    {{ behavior.themeProperty }}: {{ behavior.typeName }},
+    {[/]}
+};
+
+export interface CustomThemeType {
+    {[ for type in types ]}
+    {[ const behavior = getBehavior(type) /]}
+    {{ behavior.themeProperty }}: Custom{{ behavior.typeName }},
+    {[/]}
+};
+
+export const theme = {
+    {[ for type in types ]}
+    {[ const behavior = getBehavior(type) /]}
+    {{ behavior.themeProperty }}: {{ behavior.varName }},
+    {[/]}
+};

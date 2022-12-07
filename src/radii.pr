@@ -1,0 +1,29 @@
+{*
+
+Generate all shadow tokens as named variables.
+Tokens are named by their group path and then name
+
+*}
+{[ global CURRENT_TYPE = "Radius" /]}
+
+{[ const measureBehavior = getBehavior("measure") /]}
+{[ const behavior = getBehavior(CURRENT_TYPE) /]}
+
+import { {{ measureBehavior.varName }}, {{ measureBehavior.itemTypeName }} } from './{{ measureBehavior.fileName }}';
+
+{[ let brand = ds.currentBrand() /]}
+{[ const group = ds.tokenGroupTreeByType(CURRENT_TYPE, brand.id) /]}
+
+export type {{ behavior.itemTypeName }} = {
+  radius?: {{ measureBehavior.itemTypeName }};
+  topLeft?: {{ measureBehavior.itemTypeName }};
+  topRight?: {{ measureBehavior.itemTypeName }};
+  bottomLeft?: {{ measureBehavior.itemTypeName }};
+  bottomRight?: {{ measureBehavior.itemTypeName }};
+}
+
+export type {{ behavior.typeName }} = {[ inject "rendered-group-type" context group /]};
+
+export type Custom{{ behavior.typeName }} = {[ inject "rendered-group-custom-type" context group /]};
+
+export const {{ behavior.varName }}: {{ behavior.typeName }} = {[ inject "rendered-group-content" context group /]};
